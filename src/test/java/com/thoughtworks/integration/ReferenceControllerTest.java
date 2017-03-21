@@ -10,51 +10,52 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class BulbControllerTest {
+public class ReferenceControllerTest {
 
     @Autowired
     private MockMvc mvc;
 
     @Test
-    public void shouldBeAbleToCreateNewBulb() throws Exception {
-
+    public void shouldBeAbleToCreateReference() throws Exception {
+        //language=JSON
         String json = "{\n" +
-                "  \"title\" : \"my bulb\",\n" +
-                "  \"summary\" : \"this is my summary\"\n" +
+                "  \"title\" : \"my reference\",\n" +
+                "  \"stereotype\" : \"book\"\n" +
                 "}";
-        mvc.perform(MockMvcRequestBuilders.post("/bulb").content(json)
+
+        mvc.perform(MockMvcRequestBuilders.post("/reference").content(json)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", notNullValue()))
-                .andExpect(jsonPath("$.title", is("my bulb")))
-                .andExpect(jsonPath("$.summary", is("this is my summary")));
-        ;
+                .andExpect(jsonPath("$.referenceId", notNullValue()))
+                .andExpect(jsonPath("$.destination", notNullValue()));
     }
 
     @Test
-    public void shouldNotBeAbleToCreateNewBulbWithMissingInformation() throws Exception {
-        String jsonWithoutSummary = "{\n" +
-                "  \"title\" : \"my bulb\"\n" +
+    public void shouldNotBeAbleToCreateReferenceWithInvalidData() throws Exception {
+        //language=JSON
+        String jsonWithoutStereotype = "{\n" +
+                "  \"title\" : \"my reference\"\n" +
                 "}";
-        mvc.perform(MockMvcRequestBuilders.post("/bulb").content(jsonWithoutSummary)
+        mvc.perform(MockMvcRequestBuilders.post("/reference").content(jsonWithoutStereotype)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().is4xxClientError());
 
-
+        //language=JSON
         String jsonWithoutTitle = "{\n" +
-                "  \"summary\" : \"my bulb\"\n" +
+                "  \"stereotype\" : \"my reference\"\n" +
                 "}";
-        mvc.perform(MockMvcRequestBuilders.post("/bulb").content(jsonWithoutTitle)
+        mvc.perform(MockMvcRequestBuilders.post("/reference").content(jsonWithoutTitle)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().is4xxClientError());
+
     }
 
 }
