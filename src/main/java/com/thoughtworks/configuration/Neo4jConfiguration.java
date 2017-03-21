@@ -7,8 +7,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableNeo4jRepositories("com.thoughtworks")
-public class Neo4J {
-
-
+public class Neo4jConfiguration {
 
 }
