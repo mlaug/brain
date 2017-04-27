@@ -16,4 +16,9 @@ public class BulbDto {
     @NonNull
     private String summary;
 
+    @NonNull
+    private String uuid;
+
+    private String parentBulbUuid;
+
 }

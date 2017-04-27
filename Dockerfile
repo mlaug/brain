@@ -1,5 +1,5 @@
 FROM java:8
-RUN mkdir /app
-ADD ./build/libs/brain-0.1.0.jar /app/app.jar
-WORKDIR /app
+RUN mkdir -p /usr/app
+ADD ./build/libs/brain-0.1.0.jar /usr/app/app.jar
+WORKDIR /usr/app
 CMD ["java", "-jar", "app.jar"]
