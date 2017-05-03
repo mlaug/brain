@@ -1,0 +1,16 @@
+- service: app
+  tag: master
+  image_name: 239402555961.dkr.ecr.eu-central-1.amazonaws.com/brain/mapper
+  command: npm run unit
+
+- service: app
+  tag: master
+  image_name: 239402555961.dkr.ecr.eu-central-1.amazonaws.com/brain/mapper
+  command: npm run build
+
+- service: app
+  type: push
+  tag: master
+  image_name: 239402555961.dkr.ecr.eu-central-1.amazonaws.com/brain/mapper
+  registry: https://239402555961.dkr.ecr.eu-central-1.amazonaws.com
+  dockercfg_service: aws_dockercfg
