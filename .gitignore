@@ -2,7 +2,7 @@
 ### Java template
 # Compiled class file
 *.class
-
+aws.env
 # Log file
 *.log
 
