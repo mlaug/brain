@@ -19,39 +19,33 @@ public class BulbController {
     BulbRepository bulbRepository;
 
     @ResponseBody
-    @RequestMapping(value = "/bulbs", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/bulbs", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Bulb createBulb(@RequestBody BulbDto bulbDto){
-        Bulb bulb = Bulb.builder()
-                .summary(bulbDto.getSummary())
-                .title(bulbDto.getTitle())
-                .uuid(bulbDto.getUuid())
-                .build();
 
-        // Idempotent
+        // Idempotent is key
         Bulb bulbByUuid = bulbRepository.findByUuid(bulbDto.getUuid());
         if ( bulbByUuid != null){
-            this.log.info("Not creating bulb with same UUID {} to ensure idemptotence", bulbDto.getUuid());
-            return bulbByUuid;
+            this.log.info("Updating bulb with UUID {}", bulbDto.getUuid());
+            bulbByUuid.setSummary(bulbDto.getSummary());
+            bulbByUuid.setTitle(bulbDto.getTitle());
+            return bulbRepository.save(bulbByUuid);
+        }
+        else {
+            this.log.info("Updating bulb with UUID {}", bulbDto.getUuid());
+            Bulb bulb = Bulb.builder()
+                    .summary(bulbDto.getSummary())
+                    .title(bulbDto.getTitle())
+                    .uuid(bulbDto.getUuid())
+                    .build();
+            return bulbRepository.save(bulb);
         }
 
-        Bulb savedBulb = bulbRepository.save(bulb);
-
-        // TODO: refactor with optional, using jackson jdk8 features
-        // TODO: possible without if case?
-        if ( bulbDto.getParentBulbUuid() != null ){
-            bulbRepository.linkParentToChild(bulbDto.getParentBulbUuid(), savedBulb.getUuid());
-        }
-
-        return savedBulb;
     }
 
     @ResponseBody
     @RequestMapping(value = "/bulbs", method = RequestMethod.GET)
-    public Bulb getBulbs(){
-        // TODO: currently we just getting one of the root elements
-        List<Bulb> roots = bulbRepository.findRoots();
-        // return bulbRepository.findOne(roots.get(roots.size() - 1).getId());
-        return bulbRepository.findOne(0L);
+    public List<Bulb> getBulbs(){
+        return bulbRepository.findRoots();
     }
 
 }

@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 import java.util.UUID;
@@ -42,22 +43,7 @@ public class BulbRepositoryTest {
 
     @Test
     public void shouldBeAbleToLinkToBulbs() {
-        Bulb parent = bulbRepositoryToTest.save(Bulb.builder()
-                .summary("parent")
-                .title("parent")
-                .uuid(UUID.randomUUID().toString())
-                .build());
-
-        Bulb child = bulbRepositoryToTest.save(Bulb.builder()
-                .summary("child")
-                .title("child")
-                .uuid(UUID.randomUUID().toString())
-                .build());
-
-        Bulb parentWithoutChild = bulbRepositoryToTest.findOne(parent.getId());
-        bulbRepositoryToTest.linkParentToChild(parent.getUuid(), child.getUuid());
-        Bulb parentWithChild = bulbRepositoryToTest.findOne(parent.getId());
-        assertThat(parentWithChild.getChildren().size(), is(1));
+        throw new NotImplementedException();
     }
 
     @Test
