@@ -1,6 +1,6 @@
 - service: app
   type: push
   tag: master
-  image_name: 239402555961.dkr.ecr.eu-central-1.amazonaws.com/brain/mapper
+  image_name: 239402555961.dkr.ecr.eu-central-1.amazonaws.com/brain/knowledge
   registry: https://239402555961.dkr.ecr.eu-central-1.amazonaws.com
   dockercfg_service: aws_dockercfg

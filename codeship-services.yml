@@ -3,7 +3,7 @@ version: '2'
 services:
   app:
     build:
-      image: 239402555961.dkr.ecr.eu-central-1.amazonaws.com/brain/brain
+      image: 239402555961.dkr.ecr.eu-central-1.amazonaws.com/brain/knowledge
       dockerfile: Dockerfile
     environment:
       - SPRING_DATA_NEO4J_URI=http://neo4j:7474
