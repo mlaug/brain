@@ -4,6 +4,9 @@ import lombok.*;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.Index;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
+
+import java.util.Set;
 
 @NodeEntity
 @Builder
@@ -24,5 +27,8 @@ public class Bulb {
     @NonNull
     @Index(unique = true)
     private String uuid;
+
+    @Relationship(type = "LINK_TO")
+    private Set<Bulb> links;
 
 }

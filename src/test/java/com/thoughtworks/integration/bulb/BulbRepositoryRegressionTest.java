@@ -1,6 +1,5 @@
 package com.thoughtworks.integration.bulb;
 
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.bulb.domain.Bulb;
@@ -9,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.UUID;
@@ -18,6 +18,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles("integration")
 public class BulbRepositoryRegressionTest {
 
     @Autowired
@@ -48,8 +49,8 @@ public class BulbRepositoryRegressionTest {
                 .uuid(UUID.randomUUID().toString())
                 .build());
 
-        bulbRepositoryToTest.linkParentToChild(parent.getUuid(), child.getUuid());
-        bulbRepositoryToTest.linkParentToChild(parent.getUuid(), anotherChild.getUuid());
+        bulbRepositoryToTest.linkBulbs(parent.getUuid(), child.getUuid());
+        bulbRepositoryToTest.linkBulbs(parent.getUuid(), anotherChild.getUuid());
 
         Bulb parentWithChilds = bulbRepositoryToTest.findOne(parent.getId());
 

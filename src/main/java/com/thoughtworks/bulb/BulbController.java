@@ -2,13 +2,12 @@ package com.thoughtworks.bulb;
 
 import com.thoughtworks.bulb.domain.Bulb;
 import com.thoughtworks.bulb.dto.BulbDto;
+import com.thoughtworks.bulb.dto.BulbLinkDto;
 import com.thoughtworks.bulb.repository.BulbRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -44,8 +43,13 @@ public class BulbController {
 
     @ResponseBody
     @RequestMapping(value = "/bulbs", method = RequestMethod.GET)
-    public List<Bulb> getBulbs(){
-        return bulbRepository.findRoots();
+    public Iterable<Bulb> getBulbs(){
+        return bulbRepository.findAll();
+    }
+
+    @RequestMapping(value = "/bulbs/{uuid}", method = RequestMethod.PUT)
+    public void linkBulbs(@RequestBody BulbLinkDto bulbLinkDto, @PathVariable("uuid") String uuid){
+        bulbRepository.linkBulbs(uuid, bulbLinkDto.getLink());
     }
 
 }

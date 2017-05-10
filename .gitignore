@@ -5,6 +5,7 @@
 aws.env
 # Log file
 *.log
+target 
 
 # BlueJ files
 *.ctxt

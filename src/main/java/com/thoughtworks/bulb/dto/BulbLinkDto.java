@@ -1,4 +1,4 @@
-package com.thoughtworks.reference.dto;
+package com.thoughtworks.bulb.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,12 +8,9 @@ import lombok.NonNull;
 @Getter
 @Builder
 @AllArgsConstructor
-public class ReferenceDto {
+public class BulbLinkDto {
 
     @NonNull
-    private String title;
-
-    @NonNull
-    private String stereotype;
+    public String link;
 
 }

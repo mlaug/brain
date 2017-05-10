@@ -1,0 +1,55 @@
+{
+    "provider": {
+        "name": "bulb"
+    },
+    "consumer": {
+        "name": "some-consumer"
+    },
+    "interactions": [
+        {
+            "description": "Empty list of bulbs",
+            "request": {
+                "method": "GET",
+                "path": "/bulbs"
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json;charset=utf-8"
+                },
+                "body": [
+
+                ]
+            },
+            "providerState": "no bulbs yet available"
+        },
+        {
+            "description": "One basic bulb",
+            "request": {
+                "method": "GET",
+                "path": "/bulbs"
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json; charset=utf-8"
+                },
+                "body": [
+                    {
+                        "summary": "this is my summary",
+                        "title": "my bulb"
+                    }
+                ]
+            },
+            "providerState": "one basic bulb available"
+        }
+    ],
+    "metadata": {
+        "pact-specification": {
+            "version": "2.0.0"
+        },
+        "pact-jvm": {
+            "version": "3.3.8"
+        }
+    }
+}
