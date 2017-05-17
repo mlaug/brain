@@ -1,5 +1,6 @@
 package com.thoughtworks.bulb.domain;
 
+import com.thoughtworks.reference.domain.BulbReference;
 import lombok.*;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.Index;
@@ -30,5 +31,8 @@ public class Bulb {
 
     @Relationship(type = "LINK_TO")
     private Set<Bulb> links;
+
+    @Relationship(type = "SUPPORTING_REFERENCE")
+    private Set<BulbReference> references;
 
 }

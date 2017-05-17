@@ -1,4 +1,4 @@
-package com.thoughtworks.integration;
+package com.thoughtworks.integration.bulb;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.bulb.domain.Bulb;
