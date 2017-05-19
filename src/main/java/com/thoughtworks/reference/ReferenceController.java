@@ -1,5 +1,6 @@
 package com.thoughtworks.reference;
 
+import com.thoughtworks.bulb.repository.BulbRepository;
 import com.thoughtworks.reference.domain.BulbReference;
 import com.thoughtworks.reference.dto.BulbReferenceDto;
 import com.thoughtworks.reference.repository.ReferenceRepository;
@@ -16,15 +17,26 @@ public class ReferenceController {
     @Autowired
     private ReferenceRepository referenceRepository;
 
+    @Autowired
+    private BulbRepository bulbRepository;
+
     @ResponseBody
-    @RequestMapping(value = "/reference", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public BulbReference createReference(@RequestBody BulbReferenceDto referenceDto){
+    @RequestMapping(value = "/bulbs/{uuid}/references", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public BulbReference createReference(
+            @PathVariable("uuid") String uuid,
+            @RequestBody BulbReferenceDto referenceDto
+    ){
+
         BulbReference reference = BulbReference
                 .builder()
                 .reference(referenceDto.getReference())
+                .uuid(referenceDto.getUuid())
                 .build();
 
-        return referenceRepository.save(reference);
+        BulbReference savedReference = referenceRepository.save(reference);
+        bulbRepository.addReference(uuid, reference.getUuid());
+
+        return savedReference;
     }
 
     @ResponseBody

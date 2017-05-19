@@ -32,7 +32,7 @@ public class Bulb {
     @Relationship(type = "LINK_TO")
     private Set<Bulb> links;
 
-    @Relationship(type = "SUPPORTING_REFERENCE")
+    @Relationship(type = "BACKED_BY_REFERENCE")
     private Set<BulbReference> references;
 
 }

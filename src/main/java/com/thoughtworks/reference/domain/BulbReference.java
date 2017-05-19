@@ -15,6 +15,10 @@ public class BulbReference {
     @GraphId
     private Long id;
 
+    @NonNull
     private String reference;
+
+    @NonNull
+    private String uuid;
 
 }
