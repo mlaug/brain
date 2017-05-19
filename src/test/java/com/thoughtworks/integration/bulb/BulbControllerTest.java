@@ -105,5 +105,35 @@ public class BulbControllerTest {
 
     }
 
+    @Test
+    public void shouldBeAbleToDeleteBulb() throws Exception {
+        String json = "{\n" +
+                "  \"uuid\" : \"123-123-123\",\n" +
+                "  \"title\" : \"my bulb\",\n" +
+                "  \"summary\" : \"this is my summary\"\n" +
+                "}";
+
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/bulbs").content(json)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", is("my bulb")))
+                .andExpect(jsonPath("$.summary", is("this is my summary")))
+                .andReturn();
+
+        ObjectMapper mapper = new ObjectMapper();
+        Bulb bulb = mapper.readValue(result.getResponse().getContentAsByteArray(), Bulb.class);
+
+        mvc.perform(MockMvcRequestBuilders.get("/bulbs/" + bulb.getUuid()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", is("my bulb")))
+                .andExpect(jsonPath("$.summary", is("this is my summary")));
+
+        mvc.perform(MockMvcRequestBuilders.delete("/bulbs/" + bulb.getUuid()))
+                .andExpect(status().isOk());
+
+        mvc.perform(MockMvcRequestBuilders.get("/bulbs/" + bulb.getUuid()))
+                .andExpect(status().isNotFound());
+    }
+
 
 }
