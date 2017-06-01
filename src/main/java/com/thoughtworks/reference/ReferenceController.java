@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @CrossOrigin
 @RestController
 @Slf4j
@@ -27,23 +29,21 @@ public class ReferenceController {
             @RequestBody BulbReferenceDto referenceDto
     ){
 
-        BulbReference reference = BulbReference
-                .builder()
-                .reference(referenceDto.getReference())
-                .uuid(referenceDto.getUuid())
-                .build();
+        Optional<BulbReference> bulbReference = Optional.ofNullable(referenceRepository.findByUuid(referenceDto.getUuid()));
+        if ( !bulbReference.isPresent() ) {
+            BulbReference reference = BulbReference
+                    .builder()
+                    .reference(referenceDto.getReference())
+                    .uuid(referenceDto.getUuid())
+                    .build();
 
-        BulbReference savedReference = referenceRepository.save(reference);
-        bulbRepository.addReference(uuid, reference.getUuid());
+            BulbReference savedReference = referenceRepository.save(reference);
+            bulbRepository.addReference(uuid, reference.getUuid());
+            return savedReference;
+        }
 
-        return savedReference;
-    }
+        return bulbReference.get();
 
-    @ResponseBody
-    @RequestMapping(value = "/reference/{refId}", produces = MediaType.IMAGE_PNG_VALUE)
-    public byte[] getImagePreviewOfReference(@RequestParam("refId") Long refId){
-        BulbReference reference = referenceRepository.findOne(refId);
-        return null;
     }
 
 }
