@@ -28,6 +28,7 @@ public class BulbRepositoryTest {
                 .summary("samson")
                 .title("samson")
                 .uuid(UUID.randomUUID().toString())
+                .userId("user")
                 .build());
         assertThat(bulb.getId(), isA(Long.class));
     }

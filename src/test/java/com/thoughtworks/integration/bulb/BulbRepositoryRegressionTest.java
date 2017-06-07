@@ -34,18 +34,21 @@ public class BulbRepositoryRegressionTest {
         Bulb parent = bulbRepositoryToTest.save(Bulb.builder()
                 .summary("parent")
                 .title("parent")
+                .userId("user")
                 .uuid(UUID.randomUUID().toString())
                 .build());
 
         Bulb child = bulbRepositoryToTest.save(Bulb.builder()
                 .summary("child")
                 .title("child")
+                .userId("user")
                 .uuid(UUID.randomUUID().toString())
                 .build());
 
         Bulb anotherChild = bulbRepositoryToTest.save(Bulb.builder()
                 .summary("child")
                 .title("child")
+                .userId("user")
                 .uuid(UUID.randomUUID().toString())
                 .build());
 

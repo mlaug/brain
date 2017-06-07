@@ -64,8 +64,8 @@ public class BulbController {
 
     @ResponseBody
     @RequestMapping(value = "/{user}/bulbs", method = RequestMethod.GET)
-    public Iterable<Bulb> getBulbs(){
-        return bulbRepository.findAll();
+    public Iterable<Bulb> getBulbs(@PathVariable("user") String userId){
+        return bulbRepository.findByUserId(userId);
     }
 
     @RequestMapping(value = "/{user}/bulbs/{uuid}", method = RequestMethod.PUT)

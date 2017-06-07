@@ -14,4 +14,5 @@ public interface BulbRepository extends GraphRepository<Bulb> {
 
     Bulb findByUuid(String uuid);
 
+    Iterable<Bulb> findByUserId(String userId);
 }
