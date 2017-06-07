@@ -23,9 +23,10 @@ public class ReferenceController {
     private BulbRepository bulbRepository;
 
     @ResponseBody
-    @RequestMapping(value = "/bulbs/{uuid}/references", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/{userid}/bulbs/{uuid}/references", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public BulbReference createReference(
             @PathVariable("uuid") String uuid,
+            @PathVariable("userid") String userId,
             @RequestBody BulbReferenceDto referenceDto
     ){
 
@@ -35,6 +36,7 @@ public class ReferenceController {
                     .builder()
                     .reference(referenceDto.getReference())
                     .uuid(referenceDto.getUuid())
+                    .userId(userId)
                     .build();
 
             BulbReference savedReference = referenceRepository.save(reference);

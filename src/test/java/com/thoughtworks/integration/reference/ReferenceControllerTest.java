@@ -29,7 +29,7 @@ public class ReferenceControllerTest {
 
     @Test
     public void shouldBeAbleToAddReferenceAndBeIdempotent() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.put("/bulbs").content("{\n" +
+        mvc.perform(MockMvcRequestBuilders.put("/userid/bulbs").content("{\n" +
                 "  \"uuid\" : \"123-123-123\",\n" +
                 "  \"title\" : \"my bulb\",\n" +
                 "  \"summary\" : \"this is my summary\"\n" +
@@ -42,24 +42,24 @@ public class ReferenceControllerTest {
                 "  \"uuid\": \"345-345-345\"\n" +
                 "}";
 
-        mvc.perform(MockMvcRequestBuilders.put("/bulbs/123-123-123/references").content(json)
+        mvc.perform(MockMvcRequestBuilders.put("/userid/bulbs/123-123-123/references").content(json)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", notNullValue()))
                 .andExpect(jsonPath("$.reference", is("https://en.wikipedia.org/wiki/Confused_deputy_problem")));
 
-        mvc.perform(MockMvcRequestBuilders.get("/bulbs/123-123-123"))
+        mvc.perform(MockMvcRequestBuilders.get("/userid/bulbs/123-123-123"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.references.length()", is(1)));
 
         // Idempotent, just repeat it
-        mvc.perform(MockMvcRequestBuilders.put("/bulbs/123-123-123/references").content(json)
+        mvc.perform(MockMvcRequestBuilders.put("/userid/bulbs/123-123-123/references").content(json)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", notNullValue()))
                 .andExpect(jsonPath("$.reference", is("https://en.wikipedia.org/wiki/Confused_deputy_problem")));
 
-        mvc.perform(MockMvcRequestBuilders.get("/bulbs/123-123-123"))
+        mvc.perform(MockMvcRequestBuilders.get("/userid/bulbs/123-123-123"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.references.length()", is(1)));
     }
