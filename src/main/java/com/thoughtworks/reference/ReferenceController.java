@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@CrossOrigin
+@CrossOrigin(allowCredentials = "true")
 @RestController
 @Slf4j
 public class ReferenceController {

@@ -29,6 +29,10 @@ public class Bulb {
     @Index(unique = true)
     private String uuid;
 
+    @NonNull
+    @Index
+    private String userId;
+
     @Relationship(type = "LINK_TO")
     private Set<Bulb> links;
 
